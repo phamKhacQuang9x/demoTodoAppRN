@@ -24,7 +24,7 @@ const HomeScreen = () => {
   const [editIdItemSelected,setEditIdItemSelected] = useState()
 
   const onPressSave = ()=>{
-    if(!inputText ){
+    if(!inputText?.trim() ){
       Alert.alert("Error","Please ! Note your works to text.")
     }else{
       const newData = todos.map(item=>{
@@ -66,7 +66,7 @@ const HomeScreen = () => {
   const clearAllItem = ()=>{
     if (todos===""){
       Alert.alert("Error !!!")
-    }else {
+    }else{
       Alert.alert("Confirm !!!", "Clear all ???",[
         {
           text:"Yes",
@@ -83,7 +83,7 @@ const HomeScreen = () => {
     setTodos(newTodos)
   }
   const addTodo = () => {
-    if(!textInput){
+    if(!textInput.trim()){
       Alert.alert("Error","Please ! Note your works to text.")
     }else {
       Keyboard.dismiss()
