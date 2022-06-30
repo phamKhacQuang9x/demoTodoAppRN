@@ -82,7 +82,7 @@ const HomeScreen = () => {
     const newTodos = todos.filter(item => item.id !== todoId)
     setTodos(newTodos)
   }
-  const addTodo = () => {
+  const addTodo = () => { //add function
     if(!textInput.trim()){
       Alert.alert("Error","Please !!! Note your works to text.")
     }else {
@@ -90,7 +90,6 @@ const HomeScreen = () => {
       const newTodo = {
         id:Math.random(),
         task:textInput,
-        completed:false,
       }
       setTodos([...todos,newTodo]);
       setTextInput("")
@@ -98,13 +97,13 @@ const HomeScreen = () => {
 
   }
   return(
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.textNameApp}>
+        <Text style={styles.nameClearAllText}>
           TodoApp
         </Text>
         <TouchableOpacity onPress={clearAllItem}>
-          <Text style={styles.clearAllText}> Clear All</Text>
+          <Text style={styles.nameClearAllText}> Clear All</Text>
         </TouchableOpacity>
       </View>
 
@@ -125,6 +124,7 @@ const HomeScreen = () => {
           </Text>
           <TextInput
             style={styles.textInputModal}
+            placeholder={"Add your new works"}
             onChangeText={setInputText}
             defaultValue={inputText}
             editable={true}
@@ -158,9 +158,15 @@ const HomeScreen = () => {
   )
 }
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:"#C0C0C0"
+  },
+
   contentContainer:{
     padding:20,
-    paddingBottom:100
+    paddingBottom:100,
+
   },
   listItemView:{
     flex:1,
@@ -175,21 +181,19 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
     color:"black"
   },
-  clearAllText:{
+  nameClearAllText:{
   fontWeight:"bold",
-    fontSize:25,color:"red"
+    fontSize:25,
+    color:"red"
   },
-  textNameApp:{
-    fontWeight:"bold",
-    fontSize:25,color:"red"
-  },
+
   fixText:{
     fontWeight:"bold",
     color:"black"
   },
   touchableSave:{
     backgroundColor:'orange',
-    paddingHorizontal:100,
+    paddingHorizontal:50,
     alignItems:'center',
     marginTop:20
   },
@@ -203,15 +207,18 @@ const styles = StyleSheet.create({
   modalView:{
     flex:1,
     alignItems:"center",
-    justifyContent:"center"
+    justifyContent:"center",
+    backgroundColor:"grey"
   },
   textInputModal:{
     width:"90%",
     height:70,
-    borderColor:"grey",
+    borderColor:"white",
     borderWidth:1,
+    backgroundColor:"white",
     fontSize:25,
-    color:"black"
+    color:"black",
+    borderRadius:10
   },
   FixIcon:{
     width:50,
@@ -247,7 +254,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:20
   },
   inputContainer:{
-    backgroundColor:'grey',
+    backgroundColor:'#FFF8DC',
     elevation:40,
     flex:1,
     height:50,
@@ -271,7 +278,6 @@ const styles = StyleSheet.create({
     elevation:12,
     borderRadius:10,
     margin:5,
-
   }
 })
 export default HomeScreen;
