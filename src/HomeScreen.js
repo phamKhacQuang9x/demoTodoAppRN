@@ -14,16 +14,15 @@ import {
 
 const HomeScreen = () => {
 
+  const [todos,setTodos] = useState([]) //Flat-list
 
   const [textInput,setTextInput] = useState('')  //quan ly TextInput
-
-  const [todos,setTodos] = useState([]) //Flat-list
 
   const [inputText,setInputText]  = useState() // TextInput cua modal
 
   const [editIdItemSelected,setEditIdItemSelected] = useState()
 
-  const onPressSave = ()=>{
+  const onPressSave = ()=>{                    //Save function
     if(!inputText?.trim() ){
       Alert.alert("Error","Please ! Note your works to text.")
     }else{
@@ -37,7 +36,7 @@ const HomeScreen = () => {
       setEditIdItemSelected(undefined)
     }
     }
-  const onPressItem = (todo)=>{
+  const onPressItem = (todo)=>{        // textInput modal function
     setInputText(todo.task);
     setEditIdItemSelected(todo.id);
     setInputText("")
@@ -51,19 +50,20 @@ const HomeScreen = () => {
           }>{todo?.task}</Text>
         </View>
 
-        <TouchableOpacity style={styles.FixIcon} onPress={()=>onPressItem(todo)}>
-          <Text style={{fontWeight:"bold",color:"black"}}> Fix</Text>
+        <TouchableOpacity  //fix button
+          style={styles.FixIcon} onPress={()=>onPressItem(todo)}>
+          <Text style={styles.fixText}> Fix</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        <TouchableOpacity //Delete button
           style={styles.DeleteIcon}
           onPress={()=>deleteTodo(todo?.id)}>
-          <Text style={{fontWeight:"bold",color:"black"}}> Delete</Text>
+          <Text style={styles.fixText}> Delete</Text>
         </TouchableOpacity>
       </View>
     )
   }
-  const clearAllItem = ()=>{
+  const clearAllItem = ()=>{     //clearAll button
     if (todos===""){
       Alert.alert("Error !!!")
     }else{
@@ -84,7 +84,7 @@ const HomeScreen = () => {
   }
   const addTodo = () => {
     if(!textInput.trim()){
-      Alert.alert("Error","Please ! Note your works to text.")
+      Alert.alert("Error","Please !!! Note your works to text.")
     }else {
       Keyboard.dismiss()
       const newTodo = {
@@ -96,25 +96,22 @@ const HomeScreen = () => {
       setTextInput("")
     }
 
-
-
-
   }
   return(
     <SafeAreaView style={{flex:1}}>
       <View style={styles.header}>
-        <Text style={{fontWeight:"bold",fontSize:25,color:"red"}}>
+        <Text style={styles.textNameApp}>
           TodoApp
         </Text>
         <TouchableOpacity onPress={clearAllItem}>
-          <Text style={{fontWeight:"bold",fontSize:25,color:"red"}}> Clear All</Text>
+          <Text style={styles.clearAllText}> Clear All</Text>
         </TouchableOpacity>
       </View>
 
       <FlatList
         showsVerticalScrollIndicator={false}
         keyExtractor={(item)=>item.id.toString()}
-        contentContainerStyle={{padding:20,paddingBottom:100}}
+        contentContainerStyle={styles.contentContainer} //
         data={todos}
         renderItem={({item})=><ListItem todo={item}/>}/>
       <Modal
@@ -138,7 +135,7 @@ const HomeScreen = () => {
             style={styles.touchableSave}
             onPress={onPressSave}  //Save
           >
-            <Text style={{fontSize:35, fontWeight:"bold", color:"black"}}> Save</Text>
+            <Text style={styles.saveText}> Save</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -153,18 +150,42 @@ const HomeScreen = () => {
 
         <TouchableOpacity onPress={()=>addTodo()}>
           <View style={styles.AddContainer}>
-            <Text style={{color:"red", fontWeight:"bold"}}>Add</Text>
+            <Text style={styles.addText}>Add</Text>
           </View>
         </TouchableOpacity>
       </View>
-
     </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({
+  contentContainer:{
+    padding:20,
+    paddingBottom:100
+  },
   listItemView:{
     flex:1,
     justifyContent:"center",
+  },
+  addText:{
+    color:"red",
+    fontWeight:"bold",
+  },
+  saveText:{
+    fontSize:35,
+    fontWeight:"bold",
+    color:"black"
+  },
+  clearAllText:{
+  fontWeight:"bold",
+    fontSize:25,color:"red"
+  },
+  textNameApp:{
+    fontWeight:"bold",
+    fontSize:25,color:"red"
+  },
+  fixText:{
+    fontWeight:"bold",
+    color:"black"
   },
   touchableSave:{
     backgroundColor:'orange',
@@ -238,7 +259,7 @@ const styles = StyleSheet.create({
     height:50,
     justifyContent:"center",
     alignItems:"center",
-    backgroundColor:"grey",
+    backgroundColor:"white",
     margin:15,
     borderRadius:20,
     elevation:40,
